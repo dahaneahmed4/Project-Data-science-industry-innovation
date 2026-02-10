@@ -3,304 +3,533 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Science: The Modern Field Guide</title>
+    <title>Applications of Data Science | Real-World Examples</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Roboto:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;600;800&family=Roboto:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* --- 1. CSS VARIABLES & THEME SETUP --- */
+        /* ========================================
+        1. THEME VARIABLES (MATERIAL YOU - DEEP BLUE)
+        ========================================
+        */
         :root {
-            /* Palette: Pixel Material You (Dark) */
-            --bg-body: #09090b;       /* Deepest Black/Blue */
-            --bg-sidebar: #121214;    /* Sidebar Surface */
-            --bg-card: #18181b;       /* Card Surface */
-            --bg-code: #000000;
+            /* Backgrounds */
+            --bg-app: #05060a;        /* Pitch Black/Blue */
+            --bg-sidebar: #0b0f19;    /* Deep Blue Sidebar */
+            --bg-card: #111625;       /* Card Surface */
+            --bg-card-hover: #161b2e; /* Card Hover */
+            --bg-code: #000000;       /* Code Block Background */
             
             /* Accents */
             --primary-blue: #A8C7FA;  /* Google Blue */
-            --accent-cyan: #79F6F1;   /* Neon Cyan */
-            --accent-violet: #D0BCFF; /* Material Violet */
-            --accent-green: #C1F2B0;  /* Soft Green */
+            --primary-dark: #0d47a1;
+            --accent-cyan: #64ffda;   /* Neon Cyan */
+            --accent-violet: #d2a8ff; /* Soft Violet */
+            --accent-pink: #ff79c6;
+            --accent-green: #50fa7b;
             
             /* Text */
-            --text-main: #E4E4E7;
-            --text-muted: #A1A1AA;
+            --text-main: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-dim: #484f58;
             
-            /* Spacing & Borders */
-            --radius-xl: 24px;
+            /* Shapes */
+            --radius-xl: 32px;
+            --radius-lg: 24px;
             --radius-md: 12px;
-            --border-subtle: 1px solid rgba(255,255,255,0.08);
-            --sidebar-width: 300px;
+            
+            /* Layout */
+            --sidebar-width: 320px;
+            --nav-height: 80px;
         }
 
-        /* --- 2. GLOBAL RESET & TYPOGRAPHY --- */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        
-        html { scroll-behavior: smooth; }
-        
+        /* ========================================
+        2. GLOBAL RESET & BASE STYLES
+        ========================================
+        */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-blue) var(--bg-app);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: var(--bg-body);
+            background-color: var(--bg-app);
             color: var(--text-main);
-            line-height: 1.7;
+            line-height: 1.8;
             font-size: 16px;
+            overflow-x: hidden;
         }
 
-        h1, h2, h3, h4, h5 {
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-app);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-blue);
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
             font-family: 'Outfit', sans-serif;
             color: var(--text-main);
             margin-bottom: 1rem;
         }
 
-        h1 { font-size: 3rem; font-weight: 800; letter-spacing: -1px; line-height: 1.1; }
-        h2 { font-size: 2rem; font-weight: 600; color: var(--primary-blue); margin-top: 2rem; }
-        h3 { font-size: 1.5rem; font-weight: 600; color: var(--accent-violet); margin-top: 1.5rem; }
-        h4 { font-size: 1.2rem; font-weight: 600; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 1.5rem; }
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -1px;
+        }
 
-        p { margin-bottom: 1.2rem; color: var(--text-muted); font-weight: 300; max-width: 75ch; }
+        h2 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-top: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(168, 199, 250, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        h3 {
+            font-size: 1.6rem;
+            font-weight: 500;
+            color: var(--accent-violet);
+            margin-top: 2rem;
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-cyan);
+            margin-top: 1.5rem;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            max-width: 85ch;
+        }
+
+        strong {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            transition: 0.2s;
+        }
         
-        strong { color: var(--text-main); font-weight: 500; }
+        a:hover {
+            text-decoration: underline;
+            color: var(--accent-cyan);
+        }
 
-        /* --- 3. LAYOUT STRUCTURE --- */
-        .app-container {
+        /* ========================================
+        3. LAYOUT GRID
+        ========================================
+        */
+        .layout-wrapper {
             display: flex;
             min-height: 100vh;
         }
 
-        /* Reading Progress Bar */
-        #progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-violet));
-            z-index: 9999;
-            width: 0%;
-            transition: width 0.1s;
-        }
-
-        /* --- 4. SIDEBAR NAVIGATION --- */
+        /* ========================================
+        4. SIDEBAR NAVIGATION
+        ========================================
+        */
         .sidebar {
             width: var(--sidebar-width);
-            background: var(--bg-sidebar);
+            background-color: var(--bg-sidebar);
             height: 100vh;
             position: fixed;
             top: 0;
             left: 0;
-            border-right: var(--border-subtle);
             padding: 2rem;
             display: flex;
             flex-direction: column;
+            border-right: 1px solid rgba(255,255,255,0.05);
+            z-index: 1000;
             overflow-y: auto;
-            z-index: 100;
         }
 
-        .brand {
+        .brand-header {
+            margin-bottom: 3rem;
+        }
+
+        .brand-logo {
             font-family: 'Outfit', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 700;
+            font-size: 1.8rem;
+            font-weight: 800;
             background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .nav-menu { list-style: none; }
-        
-        .nav-item { margin-bottom: 0.5rem; }
-        
-        .nav-link {
-            display: flex;
-            align-items: center;
-            padding: 0.75rem 1rem;
-            color: var(--text-muted);
-            text-decoration: none;
-            border-radius: var(--radius-md);
-            transition: all 0.2s ease;
-            font-size: 0.95rem;
-            font-weight: 500;
-        }
-
-        .nav-link:hover {
-            background: rgba(255,255,255,0.05);
-            color: var(--text-main);
-            transform: translateX(5px);
-        }
-
-        .nav-link.active {
-            background: rgba(168, 199, 250, 0.1);
-            color: var(--primary-blue);
-            font-weight: 600;
-        }
-
-        .chapter-badge {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: #555;
-            margin: 1.5rem 0 0.5rem 1rem;
-            font-weight: 700;
-        }
-
-        /* --- 5. MAIN CONTENT AREA --- */
-        .main-content {
-            margin-left: var(--sidebar-width);
-            flex: 1;
-            padding: 4rem 6rem;
-            max-width: 1400px;
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 4rem 0 6rem 0;
-            border-bottom: var(--border-subtle);
-            margin-bottom: 4rem;
-        }
-        
-        .hero-tag {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--accent-violet);
-            color: var(--accent-violet);
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-        }
-
-        /* Content Cards/Sections */
-        section {
-            margin-bottom: 6rem;
-            position: relative;
-        }
-
-        /* Rich Text Elements */
-        .highlight-box {
-            background: rgba(255,255,255,0.03);
-            border-left: 4px solid var(--accent-cyan);
-            padding: 1.5rem 2rem;
-            border-radius: 0 var(--radius-md) var(--radius-md) 0;
-            margin: 2rem 0;
-        }
-        
-        .highlight-box.violet { border-color: var(--accent-violet); }
-        .highlight-box.green { border-color: var(--accent-green); }
-
-        .stat-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .stat-card {
-            background: var(--bg-card);
-            padding: 1.5rem;
-            border-radius: var(--radius-md);
-            border: var(--border-subtle);
-            text-align: center;
-        }
-
-        .stat-number {
             display: block;
-            font-family: 'Outfit', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--accent-cyan);
             margin-bottom: 0.5rem;
         }
 
-        .stat-label { font-size: 0.9rem; color: var(--text-muted); }
+        .brand-sub {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+        }
+
+        .nav-list {
+            list-style: none;
+            flex-grow: 1;
+        }
+
+        .nav-section-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            font-weight: 700;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            padding-left: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .nav-item {
+            margin-bottom: 0.4rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+        }
+
+        .nav-link i {
+            margin-right: 12px;
+            width: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255,255,255,0.03);
+            color: var(--text-main);
+            transform: translateX(5px);
+            text-decoration: none;
+        }
+
+        .nav-link.active {
+            background: linear-gradient(90deg, rgba(168, 199, 250, 0.15) 0%, transparent 100%);
+            color: var(--primary-blue);
+            border-left: 3px solid var(--primary-blue);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+        }
+
+        /* ========================================
+        5. MAIN CONTENT AREA
+        ========================================
+        */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            padding: 4rem 5rem;
+            max-width: 1600px;
+        }
+
+        /* ========================================
+        6. HERO SECTION & VISUALIZATION
+        ========================================
+        */
+        .hero-section {
+            background: linear-gradient(160deg, #111625 0%, #080a12 100%);
+            border-radius: var(--radius-xl);
+            padding: 4rem;
+            margin-bottom: 4rem;
+            border: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        /* Animated Background Elements */
+        .hero-bg-glow {
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 400px;
+            height: 400px;
+            background: var(--primary-dark);
+            filter: blur(150px);
+            opacity: 0.2;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            background: rgba(100, 255, 218, 0.1);
+            color: var(--accent-cyan);
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title span {
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-violet));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* INTERACTIVE DATA VISUALIZATION (Simulated) */
+        .data-viz-container {
+            margin-top: 3rem;
+            background: rgba(0,0,0,0.3);
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 120px;
+            position: relative;
+        }
+        
+        .viz-label {
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+        }
+
+        .data-stream {
+            display: flex;
+            gap: 5px;
+            align-items: flex-end;
+            height: 60px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .data-bar {
+            width: 8px;
+            background: var(--primary-blue);
+            border-radius: 4px;
+            animation: bounce 1.2s infinite ease-in-out;
+            opacity: 0.7;
+        }
+
+        @keyframes bounce {
+            0%, 100% { height: 10%; background: var(--primary-blue); }
+            50% { height: 80%; background: var(--accent-cyan); box-shadow: 0 0 10px var(--accent-cyan); }
+        }
+
+        /* ========================================
+        7. CONTENT CARDS & COMPONENTS
+        ========================================
+        */
+        .card {
+            background-color: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255,255,255,0.03);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border-color: rgba(168, 199, 250, 0.1);
+        }
+
+        /* Highlight Box */
+        .insight-box {
+            background: linear-gradient(90deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+            border-left: 4px solid var(--accent-violet);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+        }
+
+        .insight-box.cyan { border-color: var(--accent-cyan); }
+        .insight-box.green { border-color: var(--accent-green); }
+
+        .insight-title {
+            display: block;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
 
         /* Code Blocks */
+        .code-wrapper {
+            position: relative;
+            margin: 2rem 0;
+        }
+
+        .code-lang-tag {
+            position: absolute;
+            top: 0;
+            right: 20px;
+            background: #2a2a2a;
+            color: #aaa;
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 0 0 8px 8px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+        }
+
         pre {
             background: var(--bg-code);
             padding: 1.5rem;
             border-radius: var(--radius-md);
             overflow-x: auto;
-            border: var(--border-subtle);
-            margin: 2rem 0;
-            position: relative;
-        }
-        
-        pre::before {
-            content: "PYTHON";
-            position: absolute;
-            top: 0;
-            right: 0;
-            background: #222;
-            color: #888;
-            font-size: 0.7rem;
-            padding: 4px 10px;
-            border-bottom-left-radius: var(--radius-md);
-            font-family: 'Outfit', sans-serif;
+            border: 1px solid #333;
         }
 
         code {
             font-family: 'JetBrains Mono', monospace;
-            color: #ff79c6; /* Dracula Pink */
             font-size: 0.9rem;
+            color: #ccc;
         }
-        
-        .code-comment { color: #6272a4; font-style: italic; }
-        .code-func { color: #50fa7b; }
-        .code-var { color: #f8f8f2; }
 
-        /* Tables */
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
+        .token-kw { color: var(--accent-pink); }
+        .token-func { color: var(--accent-green); }
+        .token-str { color: var(--accent-cyan); }
+        .token-comment { color: #6272a4; font-style: italic; }
+
+        /* Statistics Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
             margin: 2rem 0;
-            background: var(--bg-card);
+        }
+
+        .stat-item {
+            background: rgba(255,255,255,0.02);
+            padding: 1.5rem;
             border-radius: var(--radius-md);
-            overflow: hidden;
-        }
-
-        .data-table th, .data-table td {
-            padding: 1rem 1.5rem;
-            text-align: left;
-            border-bottom: var(--border-subtle);
-        }
-
-        .data-table th {
-            background: rgba(255,255,255,0.05);
-            color: var(--accent-cyan);
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-        }
-
-        /* Footer */
-        footer {
-            margin-top: 8rem;
-            padding-top: 4rem;
-            border-top: var(--border-subtle);
             text-align: center;
-            color: var(--text-muted);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .stat-num {
+            display: block;
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-desc {
             font-size: 0.9rem;
+            color: var(--text-secondary);
         }
 
-        /* --- 6. RESPONSIVE DESIGN --- */
-        @media (max-width: 1024px) {
-            .main-content { padding: 3rem 4rem; }
+        /* ========================================
+        8. FOOTER
+        ========================================
+        */
+        .site-footer {
+            margin-top: 5rem;
+            padding-top: 3rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            color: var(--text-dim);
+            padding-bottom: 2rem;
         }
 
-        @media (max-width: 768px) {
-            .app-container { flex-direction: column; }
+        .creator-badge {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 8px 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* ========================================
+        9. RESPONSIVE DESIGN
+        ========================================
+        */
+        @media (max-width: 1200px) {
+            .main-content { padding: 3rem; }
+        }
+
+        @media (max-width: 992px) {
+            .layout-wrapper { flex-direction: column; }
             
             .sidebar {
                 width: 100%;
                 height: auto;
                 position: relative;
                 border-right: none;
-                border-bottom: var(--border-subtle);
+                border-bottom: 1px solid #333;
                 padding: 1.5rem;
+            }
+
+            .nav-list {
+                display: flex;
+                overflow-x: auto;
+                gap: 10px;
+                padding-bottom: 10px;
+            }
+            
+            .nav-section-title { display: none; }
+            
+            .nav-link {
+                white-space: nowrap;
+                background: rgba(255,255,255,0.05);
             }
             
             .main-content {
@@ -308,228 +537,303 @@
                 padding: 2rem;
             }
             
-            h1 { font-size: 2.2rem; }
-            .nav-menu { display: none; } /* Hide nav on mobile for simplicity, or use JS to toggle */
+            h1 { font-size: 2.5rem; }
         }
     </style>
 </head>
 <body>
 
-    <div id="progress-bar"></div>
-
-    <div class="app-container">
+    <div class="layout-wrapper">
         
-        <aside class="sidebar">
-            <div class="brand">
-                <span>DS</span> FIELD GUIDE
+        <nav class="sidebar">
+            <div class="brand-header">
+                <span class="brand-logo">DATA SCIENCE</span>
+                <span class="brand-sub">Industry Applications</span>
             </div>
-            
-            <div class="chapter-badge">PART I: INTRODUCTION</div>
-            <ul class="nav-menu">
-                <li class="nav-item"><a href="#intro" class="nav-link active">Overview</a></li>
-            </ul>
 
-            <div class="chapter-badge">PART II: INDUSTRIES</div>
-            <ul class="nav-menu">
-                <li class="nav-item"><a href="#healthcare" class="nav-link">01. Healthcare</a></li>
-                <li class="nav-item"><a href="#finance" class="nav-link">02. Finance</a></li>
-                <li class="nav-item"><a href="#logistics" class="nav-link">03. Logistics</a></li>
-            </ul>
+            <ul class="nav-list">
+                <div class="nav-section-title">Overview</div>
+                <li class="nav-item">
+                    <a href="#intro" class="nav-link active"><i class="fas fa-home"></i> Introduction</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#impact" class="nav-link"><i class="fas fa-chart-line"></i> Global Impact</a>
+                </li>
 
-            <div class="chapter-badge">PART III: FUTURE</div>
-            <ul class="nav-menu">
-                <li class="nav-item"><a href="#future" class="nav-link">Next Horizon</a></li>
+                <div class="nav-section-title">Industries</div>
+                <li class="nav-item">
+                    <a href="#healthcare" class="nav-link"><i class="fas fa-heartbeat"></i> Healthcare</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#finance" class="nav-link"><i class="fas fa-coins"></i> Finance</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#logistics" class="nav-link"><i class="fas fa-truck-loading"></i> Logistics</a>
+                </li>
+
+                <div class="nav-section-title">Future</div>
+                <li class="nav-item">
+                    <a href="#future" class="nav-link"><i class="fas fa-robot"></i> Next Horizon</a>
+                </li>
             </ul>
-        </aside>
+        </nav>
 
         <main class="main-content">
             
-            <section id="intro" class="hero">
-                <span class="hero-tag">Field Guide v4.0 (2025 Edition)</span>
-                <h1>Driving Innovation with<br>Data Science</h1>
-                <p style="font-size: 1.25rem; margin-top: 1.5rem; color: var(--text-main);">
-                    A deep dive into how Artificial Intelligence, Machine Learning, and Big Data are rewriting the operating systems of the global economy.
+            <section id="intro" class="hero-section">
+                <div class="hero-bg-glow"></div>
+                <div class="hero-content">
+                    <div class="hero-badge">Comprehensive Guide 2025</div>
+                    <h1 class="hero-title">Applications of Data Science:<br> <span>Real-world examples</span></h1>
+                    <p style="margin-top: 1.5rem; font-size: 1.2rem; color: #ccc;">
+                        A detailed technical exploration of how Machine Learning, Big Data, and AI are reshaping the infrastructure of the modern world.
+                    </p>
+
+                    <div class="data-viz-container">
+                        <span class="viz-label">Live Data Ingestion Rate (Simulated)</span>
+                        <div class="data-stream" id="dataStream">
+                            </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="impact">
+                <h2><i class="fas fa-globe"></i> Global Economic Impact</h2>
+                <p>
+                    Data Science is not merely a department within a company; it has become the operating system of the global economy. By 2030, AI and Data Science are expected to contribute approximately <strong>$15.7 trillion</strong> to the global economy.
                 </p>
-                
-                <div class="stat-grid">
-                    <div class="stat-card">
-                        <span class="stat-number">$15T</span>
-                        <span class="stat-label">Projected AI Contribution by 2030</span>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-num">328M</span>
+                        <span class="stat-desc">Terabytes of Data Created Daily</span>
                     </div>
-                    <div class="stat-card">
-                        <span class="stat-number">328M</span>
-                        <span class="stat-label">Terabytes of Data Created Daily</span>
+                    <div class="stat-item">
+                        <span class="stat-num">94%</span>
+                        <span class="stat-desc">Enterprise Adoption Rate</span>
                     </div>
-                    <div class="stat-card">
-                        <span class="stat-number">94%</span>
-                        <span class="stat-label">Enterprises Adopting AI</span>
+                    <div class="stat-item">
+                        <span class="stat-num">37%</span>
+                        <span class="stat-desc">Reduction in OpEx</span>
                     </div>
+                </div>
+
+                <div class="insight-box cyan">
+                    <span class="insight-title">The Data Lifecycle</span>
+                    <p style="margin-bottom: 0;">
+                        Modern applications follow a rigorous pipeline: <strong>Ingestion &rarr; Processing (ETL) &rarr; Modeling (ML) &rarr; Deployment (MLOps)</strong>. This cycle ensures that raw data is transformed into actionable intelligence in milliseconds.
+                    </p>
                 </div>
             </section>
 
             <section id="healthcare">
-                <h2>Chapter 01: Healthcare</h2>
-                <p class="lead">From <strong>Reactive</strong> Treatment to <strong>Predictive</strong> Medicine.</p>
-                
-                <h3>1.1 The Genomic Revolution</h3>
+                <h2><i class="fas fa-heartbeat"></i> 01. Healthcare</h2>
                 <p>
-                    Traditional medicine treats the "average" human. Data Science enables <strong>Precision Medicine</strong> by analyzing the unique genetic makeup of an individual. The cost of sequencing a human genome has dropped from $100M in 2001 to under $600 today, generating petabytes of biological data.
+                    The healthcare industry generates approximately 30% of the world's data volume. Data science is shifting the paradigm from <strong>reactive treatment</strong> to <strong>preventive care</strong> and <strong>precision medicine</strong>.
                 </p>
-                
-                
 
-                <div class="highlight-box">
-                    <strong>Breakthrough: AlphaFold</strong><br>
-                    DeepMind's AlphaFold has solved a 50-year-old grand challenge in biology: the "protein folding problem." By using deep learning to predict the 3D structure of proteins, it accelerates drug discovery for diseases like Alzheimer's and Cancer by years.
+                <div class="card">
+                    <h3>1.1 Medical Imaging & Computer Vision</h3>
+                    <p>
+                        Radiologists are often overworked, leading to diagnostic errors. Convolutional Neural Networks (CNNs), specifically architectures like <strong>U-Net</strong> and <strong>ResNet</strong>, are used to segment medical images (MRI, CT scans, X-Rays) with pixel-perfect accuracy.
+                    </p>
+                    
+                    <h4>Technical Detail: Tumor Detection</h4>
+                    <p>
+                        Models are trained on datasets like the NIH Chest X-ray dataset (100,000+ images). The algorithm identifies pixel intensity gradients that indicate the edges of a malignant mass.
+                    </p>
+                    
+                    <div class="code-wrapper">
+                        <span class="code-lang-tag">Python (TensorFlow)</span>
+                        <pre><code><span class="token-kw">import</span> tensorflow <span class="token-kw">as</span> tf
+<span class="token-kw">from</span> tensorflow.keras.layers <span class="token-kw">import</span> Conv2D, MaxPooling2D
+
+<span class="token-comment"># Simple CNN Block for Feature Extraction</span>
+model = tf.keras.Sequential([
+    Conv2D(32, (3, 3), activation=<span class="token-str">'relu'</span>, input_shape=(256, 256, 1)),
+    MaxPooling2D(2, 2),
+    Conv2D(64, (3, 3), activation=<span class="token-str">'relu'</span>),
+    MaxPooling2D(2, 2),
+    <span class="token-comment"># Flatten and Dense layers follow...</span>
+])</code></pre>
+                    </div>
+                    
                 </div>
 
-                <h3>1.2 AI-Assisted Imaging (Computer Vision)</h3>
-                <p>
-                    Radiologists are overwhelmed. Convolutional Neural Networks (CNNs) serve as a second pair of eyes, detecting micro-fractures, early-stage tumors, and diabetic retinopathy with accuracy rates often surpassing human specialists.
-                </p>
+                <div class="card">
+                    <h3>1.2 Drug Discovery (AlphaFold)</h3>
+                    <p>
+                        Developing a new drug traditionally costs $2.6 billion and takes 10+ years. DeepMind's <strong>AlphaFold</strong> database has predicted the 3D structure of nearly all known proteins. This allows pharmaceutical companies to simulate how a drug molecule will bind to a protein target <em>in silico</em> (on a computer) before physical testing.
+                    </p>
+                </div>
 
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Application</th>
-                            <th>Algorithm Type</th>
-                            <th>Impact</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Tumor Detection</td>
-                            <td>CNN (U-Net)</td>
-                            <td>Detects nodules 2 years before clinical symptoms.</td>
-                        </tr>
-                        <tr>
-                            <td>Drug Interaction</td>
-                            <td>Graph Neural Networks</td>
-                            <td>Predicts toxic side-effects of combining meds.</td>
-                        </tr>
-                        <tr>
-                            <td>Sepsis Prediction</td>
-                            <td>Recurrent Neural Networks (RNN)</td>
-                            <td>Reduces mortality by 20% in ICUs.</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="card">
+                    <h3>1.3 Predictive Analytics & Sepsis</h3>
+                    <p>
+                        Sepsis is a silent killer in ICUs. Hospitals use Recurrent Neural Networks (RNNs) and Long Short-Term Memory (LSTM) networks to analyze time-series data (heart rate, blood pressure, oxygen levels). These models can predict septic shock <strong>6 to 12 hours</strong> before clinical symptoms appear, allowing doctors to administer antibiotics early.
+                    </p>
+                </div>
             </section>
 
             <section id="finance">
-                <h2>Chapter 02: Finance</h2>
-                <p class="lead">The Algorithm is the Banker: <strong>Security</strong>, <strong>Speed</strong>, and <strong>DeFi</strong>.</p>
-                
-                <h3>2.1 High-Frequency Trading (HFT)</h3>
+                <h2><i class="fas fa-coins"></i> 02. Finance</h2>
                 <p>
-                    Markets no longer sleep. HFT algorithms execute millions of orders in microseconds. These models ingest not just price data, but "alternative data" such as satellite imagery of parking lots (to predict retail earnings) or Twitter sentiment.
-                </p>
-                
-                <pre><code><span class="code-comment"># Simplified Sentiment Analysis for Trading</span>
-<span class="code-func">def</span> <span class="code-func">analyze_market_sentiment</span>(news_feed):
-    score = 0
-    <span class="code-func">for</span> article <span class="code-func">in</span> news_feed:
-        <span class="code-comment"># NLP Transformer model (e.g., FinBERT)</span>
-        sentiment = model.predict(article.text)
-        <span class="code-func">if</span> sentiment == <span class="code-var">'POSITIVE'</span>:
-            score += 1
-    
-    <span class="code-func">if</span> score > threshold:
-        execute_order(<span class="code-var">'BUY'</span>, volume=1000)</code></pre>
-
-                <h3>2.2 The War on Fraud (Graph Analytics)</h3>
-                <p>
-                    Old fraud detection looked at single transactions. Modern systems use <strong>Graph Neural Networks (GNNs)</strong> to map relationships. If User A sends money to User B, who is connected to a known money laundering node User C, the system flags the network, not just the transaction.
+                    Finance is a pure data industry. From High-Frequency Trading (HFT) to personalized banking, algorithms dictate the flow of capital.
                 </p>
 
-                <h3>2.3 Decentralized Finance (DeFi) & Blockchain</h3>
-                <p>
-                    Data Science is crucial in the Web3 space. "On-chain analytics" tools scan public ledgers to identify "Whale" movements (large holders moving funds) which often precede major market volatility. This brings transparency previously impossible in traditional banking.
-                </p>
-                
-                
+                <div class="card">
+                    <h3>2.1 Algorithmic Trading (HFT)</h3>
+                    <p>
+                        Machines execute trades in microseconds. Strategies include <strong>Statistical Arbitrage</strong> and <strong>Market Making</strong>. These models ingest market data feeds and alternative data (satellite imagery, social media sentiment) to predict price movements.
+                    </p>
 
-[Image of blockchain transaction graph]
+                    <div class="insight-box green">
+                        <span class="insight-title">Visualization: The Order Book</span>
+                        <div style="display: flex; gap: 20px; align-items: center; margin-top: 10px;">
+                            <div style="font-family: monospace; font-size: 1.2rem; color: var(--accent-green);">AAPL: $154.23 <span style="font-size: 0.8rem;">▲ 0.4%</span></div>
+                            <div style="font-family: monospace; font-size: 1.2rem; color: var(--accent-pink);">TSLA: $242.50 <span style="font-size: 0.8rem;">▼ 1.2%</span></div>
+                            <div style="font-family: monospace; font-size: 1.2rem; color: var(--primary-blue);">BTC: $42,102 <span style="font-size: 0.8rem;">▲ 2.1%</span></div>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="card">
+                    <h3>2.2 Fraud Detection</h3>
+                    <p>
+                        Traditional rule-based systems (e.g., "Flag if > $10k") generate too many false positives. Modern systems use <strong>Unsupervised Learning</strong> (Isolation Forests, Autoencoders) to detect anomalies.
+                    </p>
+                    <ul>
+                        <li style="margin-bottom: 10px; color: var(--text-secondary);"><strong>Graph Analytics:</strong> Mapping relationships between accounts to spot money laundering rings.</li>
+                        <li style="margin-bottom: 10px; color: var(--text-secondary);"><strong>Behavioral Biometrics:</strong> Analyzing how a user types or holds their phone to prevent account takeover.</li>
+                    </ul>
+                </div>
 
+                <div class="card">
+                    <h3>2.3 Credit Risk Modeling</h3>
+                    <p>
+                        Fintech companies use <strong>XGBoost</strong> and <strong>Gradient Boosting</strong> classifiers to assess creditworthiness using thousands of features, including rent payments and utility bills, enabling financial inclusion for the "unbanked."
+                    </p>
+                </div>
             </section>
 
             <section id="logistics">
-                <h2>Chapter 03: Logistics</h2>
-                <p class="lead">The Invisible Engine: <strong>Autonomous</strong>, <strong>Green</strong>, and <strong>Resilient</strong>.</p>
-                
-                <h3>3.1 The Supply Chain Digital Twin</h3>
+                <h2><i class="fas fa-truck-loading"></i> 03. Logistics</h2>
                 <p>
-                    Companies like DHL and Maersk create "Digital Twins"—virtual replicas of their entire supply chain. By simulating disruptions (e.g., "What if the Suez Canal is blocked?"), they can optimize routes proactively. This is powered by Reinforcement Learning.
+                    Logistics is about optimization. The "Amazon Effect" has pushed consumer expectations to same-day delivery, which is mathematically impossible without Data Science.
                 </p>
 
-                <div class="highlight-box green">
-                    <strong>Green Logistics</strong><br>
-                    Data science is the key to sustainability. Algorithms optimize load capacity to ensure no truck drives empty ("deadhead miles"). UPS's famous "ORION" algorithm saves 100 million miles driven per year by minimizing left turns (which waste fuel while idling).
+                <div class="card">
+                    <h3>3.1 Route Optimization</h3>
+                    <p>
+                        The "Traveling Salesperson Problem" is NP-hard. Logistics giants use heuristic algorithms and graph theory to optimize delivery routes dynamically.
+                    </p>
+                    <p>
+                        <strong>UPS ORION System:</strong> This famous algorithm optimizes 66,000 routes every minute. It notoriously minimizes left turns (in right-hand traffic countries) to save fuel and reduce accident risk, saving UPS 100 million miles annually.
+                    </p>
+                    
+                    <div class="code-wrapper">
+                        <span class="code-lang-tag">Python (NetworkX)</span>
+                        <pre><code><span class="token-kw">import</span> networkx <span class="token-kw">as</span> nx
+
+<span class="token-comment"># Create a graph of distribution centers</span>
+G = nx.Graph()
+G.add_edge(<span class="token-str">"Warehouse_A"</span>, <span class="token-str">"Customer_1"</span>, weight=5.2)
+G.add_edge(<span class="token-str">"Warehouse_A"</span>, <span class="token-str">"Customer_2"</span>, weight=3.1)
+
+<span class="token-comment"># Find shortest path using Dijkstra's Algorithm</span>
+path = nx.dijkstra_path(G, source=<span class="token-str">"Warehouse_A"</span>, target=<span class="token-str">"Customer_1"</span>)</code></pre>
+                    </div>
                 </div>
 
-                <h3>3.2 Autonomous Last-Mile Delivery</h3>
-                <p>
-                    The most expensive part of shipping is the "last mile" to your door. Computer vision and sensor fusion (LiDAR + Radar) enable sidewalk robots and drones to navigate complex urban environments without human intervention.
-                </p>
+                <div class="card">
+                    <h3>3.2 Demand Forecasting</h3>
+                    <p>
+                        Retailers use Time Series Analysis (ARIMA, Prophet) to predict demand at the SKU level.
+                    </p>
+                    <div class="insight-box cyan">
+                        <span class="insight-title">Anticipatory Shipping</span>
+                        <p style="margin-bottom: 0;">
+                            Amazon's patented method predicts what you will buy before you click "Buy". It proactively moves inventory to a local fulfillment center near you, enabling 1-hour delivery windows.
+                        </p>
+                    </div>
+                </div>
 
-                <h3>3.3 Warehousing 4.0: Cobots</h3>
-                <p>
-                    "Cobots" (Collaborative Robots) work alongside humans. Using Computer Vision, they identify items in a bin. If the bin is messy, the AI calculates the optimal "grasp pose" to pick up the item without dropping it, learning from every failure.
-                </p>
+                <div class="card">
+                    <h3>3.3 Warehouse Automation</h3>
+                    <p>
+                        Kiva Systems (now Amazon Robotics) uses swarm intelligence. Hundreds of robots move shelves to human pickers. The central AI acts as an air traffic controller, calculating collision-free paths for hundreds of agents simultaneously.
+                    </p>
+                    
+
+[Image of autonomous warehouse robots]
+
+                </div>
             </section>
 
             <section id="future">
-                <h2>Next Horizon: The Future of Data</h2>
+                <h2><i class="fas fa-robot"></i> Next Horizon</h2>
+                <p>What comes next? The convergence of technologies.</p>
                 
-                <div class="stat-grid">
-                    <div class="stat-card" style="border-color: var(--accent-cyan);">
-                        <h4>Generative AI</h4>
-                        <p class="stat-label">Creating synthetic data to train models where real data is scarce (e.g., rare diseases).</p>
+                <div class="stats-grid">
+                    <div class="stat-item" style="border-top: 4px solid var(--accent-cyan);">
+                        <span class="stat-num" style="font-size: 1.5rem; color: var(--text-main);">Digital Twins</span>
+                        <p class="stat-desc">Virtual replicas of jet engines or entire cities to simulate scenarios.</p>
                     </div>
-                    <div class="stat-card" style="border-color: var(--accent-violet);">
-                        <h4>Edge AI</h4>
-                        <p class="stat-label">Running algorithms on the device (phone/sensor) rather than the cloud for zero-latency.</p>
+                    <div class="stat-item" style="border-top: 4px solid var(--accent-violet);">
+                        <span class="stat-num" style="font-size: 1.5rem; color: var(--text-main);">Quantum ML</span>
+                        <p class="stat-desc">Solving optimization problems in seconds that take supercomputers years.</p>
                     </div>
-                    <div class="stat-card" style="border-color: var(--accent-green);">
-                        <h4>Quantum</h4>
-                        <p class="stat-label">Quantum ML will solve optimization problems (like global routing) in seconds, not years.</p>
+                    <div class="stat-item" style="border-top: 4px solid var(--accent-pink);">
+                        <span class="stat-num" style="font-size: 1.5rem; color: var(--text-main);">Edge AI</span>
+                        <p class="stat-desc">Running complex models locally on IoT devices without cloud latency.</p>
                     </div>
                 </div>
             </section>
 
-            <footer>
-                <p>&copy; 2026 Open Source Data Science Library. <br>Designed for Education.</p>
+            <footer class="site-footer">
+                <p>Applications of Data Science: Real-world examples of data science driving innovation.</p>
+                <div class="creator-badge">
+                    Created by DAHANE AHMED LAMINE
+                </div>
+                <p style="margin-top: 2rem; font-size: 0.8rem; opacity: 0.5;">
+                    &copy; 2026 Open Source Documentation. All Rights Reserved.
+                </p>
             </footer>
 
         </main>
     </div>
 
     <script>
-        // 1. Reading Progress Bar Logic
-        window.onscroll = function() {
-            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            let scrolled = (winScroll / height) * 100;
-            document.getElementById("progress-bar").style.width = scrolled + "%";
-            
-            // 2. Highlight Active Navigation Link
-            let sections = document.querySelectorAll('section');
-            let navLinks = document.querySelectorAll('.nav-link');
+        // 1. Generate Animated Data Bars for Hero Section
+        const streamContainer = document.getElementById('dataStream');
+        const colors = ['#A8C7FA', '#64ffda', '#d2a8ff', '#ff79c6'];
+        
+        for (let i = 0; i < 40; i++) {
+            let bar = document.createElement('div');
+            bar.classList.add('data-bar');
+            // Randomize height animation delay and color
+            bar.style.animationDelay = Math.random() + 's';
+            bar.style.background = colors[Math.floor(Math.random() * colors.length)];
+            streamContainer.appendChild(bar);
+        }
 
-            sections.forEach(section => {
-                let top = window.scrollY;
-                let offset = section.offsetTop - 150;
-                let height = section.offsetHeight;
-                let id = section.getAttribute('id');
+        // 2. Sidebar Navigation Highlight on Scroll
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll(".nav-link");
 
-                if (top >= offset && top < offset + height) {
-                    navLinks.forEach(link => {
-                        link.classList.remove('active');
-                        if (link.getAttribute('href').includes(id)) {
-                            link.classList.add('active');
-                        }
-                    });
+        window.onscroll = () => {
+            let current = "";
+            sections.forEach((section) => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 150) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            navLinks.forEach((link) => {
+                link.classList.remove("active");
+                if (link.getAttribute("href").includes(current)) {
+                    link.classList.add("active");
                 }
             });
         };
